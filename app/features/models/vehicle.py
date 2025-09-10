@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Optional, List
 from sqlalchemy import String, Boolean, DateTime, Enum, Numeric, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 from ...core.db import Base
@@ -11,7 +10,7 @@ from ...core.db import Base
 class Vehicle(Base):
     __tablename__ = "vehicles"
 
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     type: Mapped[str] = mapped_column(Enum('bike', 'car', 'scooter', 'scooty', 'van', name='vehicle_type'), nullable=False)
     sub_type: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)

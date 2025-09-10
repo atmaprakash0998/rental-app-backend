@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Optional
 from sqlalchemy import String, Boolean, DateTime, Enum, Numeric, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 from ...core.db import Base
@@ -21,9 +20,9 @@ class Payment(Base):
     external_system_transaction_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     channel: Mapped[str] = mapped_column(Enum('credit_card', 'debit_card', 'net_banking', 'wallet', 'upi', 'cash', name='payment_channel'), nullable=False)
     source_type: Mapped[str] = mapped_column(Enum('user', 'company', name='source_type'), nullable=False)
-    source_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    source_id: Mapped[str] = mapped_column(String(36), nullable=False)
     destination_type: Mapped[str] = mapped_column(Enum('user', 'company', name='destination_type'), nullable=False)
-    destination_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    destination_id: Mapped[str] = mapped_column(String(36), nullable=False)
     additional_data: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
     is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
     added_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)

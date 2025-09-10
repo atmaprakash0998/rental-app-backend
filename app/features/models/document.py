@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Optional
 from sqlalchemy import String, Boolean, DateTime, Enum, JSON, Integer, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 from ...core.db import Base
@@ -15,7 +14,7 @@ class Document(Base):
     type: Mapped[str] = mapped_column(String(50), nullable=False)
     sub_type: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     entity_type: Mapped[str] = mapped_column(Enum('user', 'vehicle', name='entity_type'), nullable=False)
-    entity_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    entity_id: Mapped[str] = mapped_column(String(36), nullable=False)
     document_number: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     expiry_date: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
     issue_date: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)

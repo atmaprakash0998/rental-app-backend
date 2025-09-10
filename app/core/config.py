@@ -12,23 +12,23 @@ class Settings:
 
     def _get_database_url(self) -> str:
         """Get async database URL from environment variables"""
-        db_user = os.getenv("DB_USER", "")
-        db_password = os.getenv("DB_PASSWORD", "")
-        db_host = os.getenv("DB_HOST", "")
-        db_port = os.getenv("DB_PORT", "")
-        db_name = os.getenv("DB_NAME", "")
+        db_user = os.getenv("DB_USER", "root")
+        db_password = os.getenv("DB_PASSWORD", "1109")
+        db_host = os.getenv("DB_HOST", "localhost")
+        db_port = os.getenv("DB_PORT", "3306")
+        db_name = os.getenv("DB_NAME", "rental_app")
         
-        return f"postgresql+asyncpg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+        return f"mysql+aiomysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 
     def _get_database_url_sync(self) -> str:
         """Get sync database URL from environment variables"""
-        db_user = os.getenv("DB_USER", "postgres")
-        db_password = os.getenv("DB_PASSWORD", "")
-        db_host = os.getenv("DB_HOST", "")
-        db_port = os.getenv("DB_PORT", "")
-        db_name = os.getenv("DB_NAME", "")
+        db_user = os.getenv("DB_USER", "root")
+        db_password = os.getenv("DB_PASSWORD", "1109")
+        db_host = os.getenv("DB_HOST", "localhost")
+        db_port = os.getenv("DB_PORT", "3306")
+        db_name = os.getenv("DB_NAME", "rental_app")
         
-        return f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+        return f"mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 
 
 def get_settings() -> Settings:

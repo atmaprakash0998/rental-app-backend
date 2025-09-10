@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Optional
 from sqlalchemy import String, Boolean, DateTime, Enum, Numeric, JSON, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 from ...core.db import Base
@@ -12,8 +11,8 @@ class UserVehicle(Base):
     __tablename__ = "user_vehicles"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    vehicle_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("vehicles.id"), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(36), ForeignKey("users.id"), nullable=False)
+    vehicle_id: Mapped[str] = mapped_column(String(36), ForeignKey("vehicles.id"), nullable=False)
     ownership_type: Mapped[str] = mapped_column(Enum('owner', 'renter', name='ownership_type'), default='owner')
     ownership_start_date: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
     ownership_end_date: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
